@@ -1,9 +1,24 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+
+import Sidebar from './components/Sidebar';
+import Content from './components/Content';
 import './App.css';
+
+const Layout = styled.div`
+    display: flex;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    will-change: overflow;
+`;
 
 class App extends Component {
     state = {
-        contents: []
+        contents: [],
+        activeContent: null
     }
 
     componentDidMount() {
@@ -16,16 +31,18 @@ class App extends Component {
             .then(({contents}) => this.setState({contents}));
     }
 
+    onMenuItemClick = (content) => {
+        this.setState({activeContent: content});
+    }
+
     render() {
-        const { contents } = this.state;
+        const { activeContent, contents } = this.state;
 
         return (
-            <div>
-                <h1>Hello Leito Wiki</h1>
-                {contents.map((content, index) => (
-                    <h2 key={index}>{content.title}</h2>
-                ))}
-            </div>
+            <Layout>
+                <Sidebar contents={contents} onMenuItemClick={this.onMenuItemClick} />
+                <Content content={activeContent}/>
+            </Layout>
         );
     }
 }
