@@ -8,6 +8,7 @@ router.get('/', function(req, res, next) {
       {title: 'Linux'},
       {title: 'Debian'},
       {title: 'Installation'},
+      {title: 'GraphQl'},
     ]
   });
 });
