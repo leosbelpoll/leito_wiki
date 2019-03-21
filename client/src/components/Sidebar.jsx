@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 import { FaFolder } from 'react-icons/fa';
+import { FaFolderOpen } from 'react-icons/fa';
 
 const SidebarStyled = styled.div`
     background: #24282A;
@@ -25,22 +26,19 @@ const MenuItem = styled.a`
     }
 `;
 
-const FaFolderStyled = styled(FaFolder)`
-    margin-right: 7px;
-`;
-
-
 export default class Sidebar extends Component {
     render() {
-        const { contents, onMenuItemClick } = this.props;
+        const { contents, onMenuItemClick, activeContent } = this.props;
+
+        const firstParents = contents.filter(content => !content.parent);
 
         return (
             <SidebarStyled>
-                {contents.map((content, index) => (
+                {firstParents.map((content, index) => (
                     <MenuItem
                         href="#"
                         key={index}
-                        onClick={() => onMenuItemClick(content)}><FaFolderStyled /> {content.title}</MenuItem>
+                        onClick={() => onMenuItemClick(content)}>{content === activeContent ? <FaFolderOpen /> : <FaFolder />}&nbsp;&nbsp;{content.title}</MenuItem>
                 ))}
             </SidebarStyled>
         )

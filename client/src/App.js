@@ -40,8 +40,8 @@ class App extends Component {
 
         return (
             <Layout>
-                <Sidebar contents={contents} onMenuItemClick={this.onMenuItemClick} />
-                <Content content={activeContent}/>
+                <Sidebar contents={contents} activeContent={activeContent} onMenuItemClick={this.onMenuItemClick} />
+                <Content content={activeContent} contents={contents} onMenuItemClick={this.onMenuItemClick} />
             </Layout>
         );
     }

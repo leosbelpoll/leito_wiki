@@ -10,13 +10,15 @@ const ContentStyled = styled.div`
     color: white;
 `;
 
-const inlineCode = props => <strong>{props.value}</strong>
-const code = props => <pre><code>{props.value}</code></pre>
-const tableRow = props => <tr className="foo">{props.children}</tr>
+const LinkStyled = styled.a`
+    padding: 20px;
+    color: white;
+`
 
 export default class Content extends Component {
     render() {
-        const { content } = this.props;
+        const { content, contents, onMenuItemClick } = this.props;
+        const children = contents.filter(c => content && c.parent === content.id);
 
         return (
             <ContentStyled>
@@ -24,7 +26,14 @@ export default class Content extends Component {
                     <Fragment>
                         <h1>{content.title}</h1>
                         <br/>
-                        <ReactMarkdown source={content.content} renderers={{code, inlineCode, tableRow}} />
+                        {children.map((content, index) => (
+                            <p key={index}>
+                                <LinkStyled
+                                    href="#"
+                                    onClick={() => onMenuItemClick(content)}>{content.title}</LinkStyled>
+                            </p>
+                        ))}
+                        <ReactMarkdown source={content.content} />
                     </Fragment>
                 ) : (
                     <h2>No content selected</h2>
