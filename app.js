@@ -3,9 +3,6 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const content = require('./routes/content');
-const contentFake = require('./routes/contentFake');
-
 const app = express();
 
 app.use(bodyParser.json());
@@ -16,8 +13,10 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 if (process.env.ENVIRONMENT === 'prod') {
+    const content = require('./routes/content');
     app.use('/api/v1/contents', content);
 } else {
+    const contentFake = require('./routes/contentFake');
     app.use('/api/v1/contents', contentFake);
 }
 
