@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import Sidebar from './components/Sidebar';
 import Content from './components/Content';
-import './App.css';
+import './App.scss';
 
 const Layout = styled.div`
     display: flex;

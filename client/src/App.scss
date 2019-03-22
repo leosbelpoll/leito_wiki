@@ -1,0 +1,32 @@
+* {
+    box-sizing: border-box;
+    outline: none;
+}
+
+/* style scroll bar */
+::-webkit-scrollbar {
+    width: 6px;
+    background: #2A2E30;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(122, 122, 122);
+    border-radius: 8px;
+}
+
+/* style context menu */
+.react-contextmenu {
+    background: rgb(236, 236, 236);
+    color: rgb(61, 61, 61);
+}
+
+.react-contextmenu-item {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        background: rgb(189, 189, 189);
+        cursor: pointer;
+    }
+}

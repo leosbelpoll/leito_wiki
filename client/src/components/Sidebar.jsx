@@ -4,6 +4,10 @@ import classNames from 'classnames';
 import { FaCaretDown } from 'react-icons/fa';
 import { FaCaretRight } from 'react-icons/fa';
 import { FaCircle } from 'react-icons/fa';
+import { FaPlusSquare } from 'react-icons/fa';
+import { FaPenSquare } from 'react-icons/fa';
+import { FaTrashAlt } from 'react-icons/fa';
+import { ContextMenu, MenuItem as MenuContextItem, ContextMenuTrigger } from "react-contextmenu";
 
 const SidebarStyled = styled.div`
     background: #24282A;
@@ -61,52 +65,50 @@ export default class Sidebar extends Component {
         onMenuItemClick(content);
     }
 
+    onRightClickMenu = (e, data) => {
+        console.log(data.foo);
+    }
+
     render() {
         const { contents, activeContent } = this.props;
 
         return (
             // FIXME: This way is veryyy wrong, but I was quickly, make recursive
             <SidebarStyled>
-                {contents.map((content, index) => (
-                    <Fragment key={index}>
-                        <MenuItem
-                            href="#"
-                            key={index}
-                            className={classNames({
-                                'active': content === activeContent
-                            })}
-                            onClick={() => this.onClickMenu(content)}>
-                            {content.children.length ? (
-                                <Fragment>
-                                    {content.open ? <FaCaretDownStyled /> : <FaCaretRightStyled />}
-                                </Fragment>
-                                )
-                                : <FaCircleStyled />
-                            }
-                                &nbsp;&nbsp;
-                            {content.title}
-                        </MenuItem>
-                        {content.open && content.children.map((content, index) => (
-                            <Fragment key={index}>
-                                <MenuSubItem1
-                                    href="#"
-                                    key={index}
-                                    className={classNames({
-                                        'active': content === activeContent
-                                    })}
-                                    onClick={() => this.onClickMenu(content)}>
-                                        {content.children.length ? (
-                                            <Fragment>
-                                                {content.open ? <FaCaretDownStyled /> : <FaCaretRightStyled />}
-                                            </Fragment>
-                                            )
-                                            : <FaCircleStyled />
-                                        }
-                                        &nbsp;&nbsp;
-                                    {content.title}
-                                </MenuSubItem1>
-                                {content.open && content.children.map((content, index) => (
-                                    <MenuSubItem2
+                <ContextMenuTrigger id="some_unique_identifier">
+                    <ContextMenu id="some_unique_identifier">
+                        <MenuContextItem data={{foo: 'bar'}} onClick={this.onRightClickMenu}>
+                            <FaPlusSquare />&nbsp;&nbsp;Add page
+                        </MenuContextItem>
+                        <MenuContextItem data={{foo: 'bar2'}} onClick={this.onRightClickMenu}>
+                            <FaPenSquare />&nbsp;&nbsp;Edit content
+                        </MenuContextItem>
+                        {/* <MenuContextItem data={{foo: 'bar3'}} onClick={this.onRightClickMenu}>
+                            <FaTrashAlt />&nbsp;&nbsp;Remove
+                        </MenuContextItem> */}
+                    </ContextMenu>
+                    {contents.map((content, index) => (
+                        <Fragment key={index}>
+                            <MenuItem
+                                href="#"
+                                key={index}
+                                className={classNames({
+                                    'active': content === activeContent
+                                })}
+                                onClick={() => this.onClickMenu(content)}>
+                                {content.children.length ? (
+                                    <Fragment>
+                                        {content.open ? <FaCaretDownStyled /> : <FaCaretRightStyled />}
+                                    </Fragment>
+                                    )
+                                    : <FaCircleStyled />
+                                }
+                                    &nbsp;&nbsp;
+                                {content.title}
+                            </MenuItem>
+                            {content.open && content.children.map((content, index) => (
+                                <Fragment key={index}>
+                                    <MenuSubItem1
                                         href="#"
                                         key={index}
                                         className={classNames({
@@ -122,12 +124,31 @@ export default class Sidebar extends Component {
                                             }
                                             &nbsp;&nbsp;
                                         {content.title}
-                                    </MenuSubItem2>
-                                ))}
-                            </Fragment>
-                        ))}
-                    </Fragment>
-                ))}
+                                    </MenuSubItem1>
+                                    {content.open && content.children.map((content, index) => (
+                                        <MenuSubItem2
+                                            href="#"
+                                            key={index}
+                                            className={classNames({
+                                                'active': content === activeContent
+                                            })}
+                                            onClick={() => this.onClickMenu(content)}>
+                                                {content.children.length ? (
+                                                    <Fragment>
+                                                        {content.open ? <FaCaretDownStyled /> : <FaCaretRightStyled />}
+                                                    </Fragment>
+                                                    )
+                                                    : <FaCircleStyled />
+                                                }
+                                                &nbsp;&nbsp;
+                                            {content.title}
+                                        </MenuSubItem2>
+                                    ))}
+                                </Fragment>
+                            ))}
+                        </Fragment>
+                    ))}
+                </ContextMenuTrigger>
             </SidebarStyled>
         )
     }
