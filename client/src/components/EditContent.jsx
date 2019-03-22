@@ -2,19 +2,19 @@ import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 
 const EditContentStyled = styled.div`
-    width: 50%;
+    background: #33373A;
+    width: 70%;
     overflow-y: auto;
     padding: 20px;
 `;
 
 const TextareaStyled = styled.textarea`
-    display: flex;
-    overflow: hidden;
-    height: 100vh;
-    position: relative;
     width: 100%;
-    backface-visibility: hidden;
-    will-change: overflow;
+    height: 100vh;
+    border: none;
+    background: none;
+    color: white;
+    resize: none;
 `;
 
 export default class EditContent extends Component {
