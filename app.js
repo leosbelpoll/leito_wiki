@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 const content = require('./routes/content');
+const contentFake = require('./routes/contentFake');
 
 const app = express();
 
@@ -14,7 +15,11 @@ app.use(cookieParser())
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.use('/api/v1/contents', content);
+if (process.env.ENVIRONMENT === 'prod') {
+    app.use('/api/v1/contents', content);
+} else {
+    app.use('/api/v1/contents', contentFake);
+}
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.

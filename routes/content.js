@@ -1,6 +1,6 @@
 const express = require('express');
-var pgp = require("pg-promise")();
-var db = pgp(process.env.DATABASE_URL);
+const pgp = require("pg-promise")();
+const db = pgp(process.env.DATABASE_URL);
 const router = express.Router();
 
 /* GET contents listing. */
