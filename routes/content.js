@@ -7,7 +7,14 @@ const router = express.Router();
 router.get('/', function(req, res, next) {
     db.query('SELECT * FROM contents')
         .then(function (contents) {
-            res.json({contents});
+            for (const content of contents) {
+                content.children = contents.filter(c => c.parent === content.id);
+            }
+            const firstParents = contents.filter(content => !content.parent);
+
+            res.json({
+                contents: firstParents
+            });
         })
         .catch(function (error) {
             console.error(error);
