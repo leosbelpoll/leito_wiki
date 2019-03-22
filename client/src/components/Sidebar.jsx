@@ -70,7 +70,7 @@ export default class Sidebar extends Component {
     }
 
     render() {
-        const { contents, activeContent } = this.props;
+        const { contents, activeContent, onEditClick } = this.props;
 
         return (
             // FIXME: This way is veryyy wrong, but I was quickly, make recursive
@@ -80,7 +80,7 @@ export default class Sidebar extends Component {
                         <MenuContextItem data={{foo: 'bar'}} onClick={this.onRightClickMenu}>
                             <FaPlusSquare />&nbsp;&nbsp;Add page
                         </MenuContextItem>
-                        <MenuContextItem data={{foo: 'bar2'}} onClick={this.onRightClickMenu}>
+                        <MenuContextItem onClick={onEditClick}>
                             <FaPenSquare />&nbsp;&nbsp;Edit content
                         </MenuContextItem>
                         {/* <MenuContextItem data={{foo: 'bar3'}} onClick={this.onRightClickMenu}>

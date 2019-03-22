@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Sidebar from './components/Sidebar';
 import Content from './components/Content';
+import EditContent from './components/EditContent';
 import './App.scss';
 
 const Layout = styled.div`
@@ -18,7 +19,8 @@ const Layout = styled.div`
 class App extends Component {
     state = {
         contents: [],
-        activeContent: null
+        activeContent: null,
+        editing: false
     }
 
     componentDidMount() {
@@ -47,15 +49,25 @@ class App extends Component {
                 }
             }
         }
-        this.setState({activeContent: content});
+        this.setState({
+            activeContent: content,
+            editing: false
+        });
     }
 
+    onEditClick = () => this.setState({editing: true});
+
+    onEditComponentChange = (value) => this.setState((state) => ({
+        activeContent: {...state.activeContent, content: value}
+    }));
+
     render() {
-        const { activeContent, contents } = this.state;
+        const { activeContent, contents, editing } = this.state;
 
         return (
             <Layout>
-                <Sidebar contents={contents} activeContent={activeContent} onMenuItemClick={this.onMenuItemClick} />
+                <Sidebar contents={contents} activeContent={activeContent} onMenuItemClick={this.onMenuItemClick} onEditClick={this.onEditClick} />
+                {editing && !!activeContent.content && <EditContent content={activeContent} onEditComponentChange={this.onEditComponentChange} />}
                 <Content content={activeContent} contents={contents} onMenuItemClick={this.onMenuItemClick} />
             </Layout>
         );
