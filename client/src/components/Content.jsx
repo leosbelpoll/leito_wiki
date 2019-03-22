@@ -10,21 +10,38 @@ const ContentStyled = styled.div`
     color: white;
 `;
 
+const LinkStyled = styled.a`
+    padding: 5px 20px;
+    color: rgba(255, 255, 255, .7);
+
+    &:hover {
+        color: white;
+    }
+`
+
 export default class Content extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         const { content } = this.props;
 
-        return content !== nextProps.content && !!nextProps.content.content;
+        return content !== nextProps.content && (!!nextProps.content.content || nextProps.content.children.length);
     }
 
     render() {
-        const { content } = this.props;
+        const { content, onMenuItemClick } = this.props;
+
         return (
             <ContentStyled>
                 {content ? (
                     <Fragment>
                         <h1>{content.title}</h1>
                         <br/>
+                        {content.children.map((content, index) => (
+                            <p key={index}>
+                                <LinkStyled
+                                    href="#"
+                                    onClick={() => onMenuItemClick(content)}>{content.title}</LinkStyled>
+                            </p>
+                        ))}
                         <ReactMarkdown source={content.content} />
                     </Fragment>
                 ) : (

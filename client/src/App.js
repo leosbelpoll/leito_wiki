@@ -32,6 +32,21 @@ class App extends Component {
     }
 
     onMenuItemClick = (content) => {
+        const { contents } = this.state;
+        if (content.parent) {
+            for (const c of contents) {
+                if (c.id === content.parent) {
+                    c.open = true;
+                    break;
+                }
+                for (const child of c.children) {
+                    if (child.id === content.parent) {
+                        child.open = true;
+                        break;
+                    }
+                }
+            }
+        }
         this.setState({activeContent: content});
     }
 
