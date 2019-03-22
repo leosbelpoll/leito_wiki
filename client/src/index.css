@@ -18,4 +18,15 @@ code {
 
 * {
   box-sizing: border-box;
+  outline: none;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  background: #2A2E30;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(122, 122, 122);
+  border-radius: 8px;
 }
